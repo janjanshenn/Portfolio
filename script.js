@@ -107,21 +107,54 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', revealOnScroll);
     revealOnScroll(); // Trigger once on load
 
-    // 6. Contact Form Submission handling (prevent default for demo)
+    // 6. Contact Form Submission handling (Netlify AJAX)
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Prevent default page redirect to handle via AJAX
+            
             const btn = contactForm.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
-            btn.innerHTML = 'Sent! <i class="fas fa-check" style="margin-left: 8px;"></i>';
-            btn.style.background = '#10b981'; // Green
+            
+            // Loading State
+            btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin" style="margin-left: 8px;"></i>';
+            btn.disabled = true;
+            btn.style.opacity = '0.7';
 
-            setTimeout(() => {
+            // Submit via Fetch API
+            const formData = new FormData(contactForm);
+            
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                // Success State
+                btn.innerHTML = 'Message Sent ✓';
+                btn.style.background = '#10b981'; // Green
+                btn.style.opacity = '1';
                 contactForm.reset();
-                btn.innerHTML = originalText;
-                btn.style.background = ''; // Reset to default
-            }, 3000);
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = ''; // Reset to default
+                    btn.disabled = false;
+                }, 3000);
+            })
+            .catch((error) => {
+                // Error State
+                btn.innerHTML = 'Error! Try Again';
+                btn.style.background = '#ef4444'; // Red
+                btn.style.opacity = '1';
+                console.error(error);
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            });
         });
     }
 
@@ -152,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.classList.add('active');
                 const targetId = btn.getAttribute('data-tab');
                 const targetContent = document.getElementById(targetId);
-                
+
                 if (targetContent) {
                     targetContent.classList.add('active');
                     // Update URL hash without scrolling the page
