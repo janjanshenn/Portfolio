@@ -292,7 +292,7 @@ ul {
 
 .about-image img {
     width: 100%;
-    max-width: 350px;
+    max-width: 250px;
     aspect-ratio: 1/1;
     border-radius: 50%;
     object-fit: cover;
@@ -931,7 +931,7 @@ footer {
     }
     
     .about-image img {
-        max-width: 250px;
+        max-width: 180px;
     }
     
     .about-text h3 {
