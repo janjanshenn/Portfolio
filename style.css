@@ -848,8 +848,14 @@ footer {
     border-right: 3px solid var(--primary-color);
     white-space: nowrap;
     overflow: hidden;
-    margin: 0 auto;
     display: inline-block;
+    vertical-align: bottom;
+    animation: blink 0.75s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--primary-color); }
 }
 
 /* Staggered Reveal Delay */

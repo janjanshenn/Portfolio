@@ -92,16 +92,55 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Typewriter Effect
     const typewriter = document.getElementById('typewriter');
     if (typewriter) {
-        const text = typewriter.innerHTML;
-        typewriter.innerHTML = '';
-        let i = 0;
+        const prefix = "Student | ";
+        const words = ["Web Developer", "Gamer", "Tech Enthusiast"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
+        let isPrefixTyped = false;
+
         const type = () => {
-            if (i < text.length) {
-                typewriter.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, 100);
+            if (!isPrefixTyped) {
+                // Phase 1: Typing the prefix
+                typewriter.textContent = prefix.substring(0, charIndex + 1);
+                charIndex++;
+                if (charIndex === prefix.length) {
+                    isPrefixTyped = true;
+                    charIndex = 0; // Reset charIndex for words
+                    setTimeout(type, 500); // Short pause after prefix
+                } else {
+                    setTimeout(type, 100);
+                }
+                return;
             }
+
+            // Phase 2: Cycling words
+            const currentWord = words[wordIndex];
+
+            if (isDeleting) {
+                typewriter.textContent = prefix + currentWord.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 50;
+            } else {
+                typewriter.textContent = prefix + currentWord.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                isDeleting = true;
+                typeSpeed = 2000; // Pause at the end
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
         };
+
+        typewriter.textContent = '';
         setTimeout(type, 1000);
     }
 
@@ -125,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (elementTop < windowHeight - elementVisible) {
                 if (!reveal.classList.contains('active')) {
                     reveal.classList.add('active');
-                    
+
                     // If this is the skills section, animate bars
                     if (reveal.id === 'skills') {
                         skillBars.forEach(bar => {
