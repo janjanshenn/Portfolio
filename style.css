@@ -322,41 +322,18 @@ ul {
 /* =========================================
    Education Section (Timeline)
    ========================================= */
-.timeline {
+.education-list {
     max-width: 800px;
     margin: 0 auto;
-    position: relative;
-    padding-left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
-.timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 2px;
-    background: var(--border-color);
-}
-
-.timeline-item {
-    position: relative;
-    margin-bottom: 50px;
-}
-
-.timeline-dot {
-    position: absolute;
-    left: -36px;
-    top: 5px;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    box-shadow: 0 0 10px var(--primary-color);
-    border: 3px solid var(--bg-dark);
-}
-
-.timeline-content {
+.education-item {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
     background: var(--bg-card);
     padding: 30px;
     border-radius: 20px;
@@ -365,13 +342,40 @@ ul {
     transition: var(--transition);
 }
 
-.timeline-content:hover {
-    transform: translateX(10px);
+.education-item:hover {
+    transform: translateY(-5px);
     border-color: var(--primary-color);
     box-shadow: var(--shadow-lg);
 }
 
-.timeline-content h3 {
+.school-logo {
+    min-width: 70px;
+    height: 70px;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.school-logo i {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.school-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+}
+
+.education-content {
+    flex: 1;
+}
+
+.education-content h3 {
     font-size: 1.4rem;
     margin-bottom: 8px;
 }
@@ -391,7 +395,7 @@ ul {
     display: block;
 }
 
-.timeline-content .description {
+.education-content .description {
     font-size: 1rem;
     color: var(--text-muted);
     line-height: 1.7;
@@ -784,25 +788,56 @@ footer {
    Animations & Keyframes
    ========================================= */
 @keyframes float {
-    0% { transform: translate(-50%, -50%) translateY(0px); }
-    50% { transform: translate(-50%, -50%) translateY(-20px); }
-    100% { transform: translate(-50%, -50%) translateY(0px); }
+    0% {
+        transform: translate(-50%, -50%) translateY(0px);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateY(-20px);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) translateY(0px);
+    }
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.05); opacity: 0.8; }
-    100% { transform: scale(1); opacity: 0.5; }
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
 }
 
 @keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
 }
 
 @keyframes blink {
-    from, to { border-color: transparent; }
-    50% { border-color: var(--primary-color); }
+
+    from,
+    to {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: var(--primary-color);
+    }
 }
 
 .hero-shape {
@@ -818,14 +853,33 @@ footer {
 }
 
 /* Staggered Reveal Delay */
-.reveal.active .hobby-card:nth-child(1) { transition-delay: 0.1s; }
-.reveal.active .hobby-card:nth-child(2) { transition-delay: 0.2s; }
-.reveal.active .hobby-card:nth-child(3) { transition-delay: 0.3s; }
-.reveal.active .hobby-card:nth-child(4) { transition-delay: 0.4s; }
+.reveal.active .hobby-card:nth-child(1) {
+    transition-delay: 0.1s;
+}
 
-.reveal.active .project-card:nth-child(1) { transition-delay: 0.1s; }
-.reveal.active .project-card:nth-child(2) { transition-delay: 0.2s; }
-.reveal.active .project-card:nth-child(3) { transition-delay: 0.3s; }
+.reveal.active .hobby-card:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.reveal.active .hobby-card:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.reveal.active .hobby-card:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+.reveal.active .project-card:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.reveal.active .project-card:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.reveal.active .project-card:nth-child(3) {
+    transition-delay: 0.3s;
+}
 
 /* =========================================
    Animations
@@ -901,63 +955,74 @@ footer {
     .contact-grid {
         padding: 30px 20px;
     }
+
+    .education-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .school-logo {
+        margin: 0 auto;
+    }
 }
 
 @media (max-width: 480px) {
     .hero h1 {
         font-size: 2.5rem;
     }
-    
+
     .hero .greeting {
         font-size: 1rem;
         letter-spacing: 1px;
     }
-    
+
     .typing-text {
         font-size: 1.1rem;
     }
-    
+
     .section-title {
         font-size: 1.7rem;
         margin-bottom: 40px;
     }
-    
+
     .section {
         padding: 60px 0;
     }
-    
+
     .container {
         padding: 0 15px;
     }
-    
+
     .about-image img {
         max-width: 180px;
     }
-    
+
     .about-text h3 {
         font-size: 1.5rem;
     }
-    
+
     .skill-info {
         font-size: 1rem;
     }
-    
+
     .hobby-card {
         padding: 30px 20px;
     }
-    
+
     .contact-grid {
         padding: 25px 15px;
     }
-    
+
     .social-links {
         justify-content: center !important;
     }
-    
+
     .contact-info {
         text-align: center;
     }
-    
+
     .contact-item {
         justify-content: center;
     }
