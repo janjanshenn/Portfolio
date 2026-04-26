@@ -89,8 +89,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 5. Scroll Reveal Animation
+    // 5. Typewriter Effect
+    const typewriter = document.getElementById('typewriter');
+    if (typewriter) {
+        const text = typewriter.innerHTML;
+        typewriter.innerHTML = '';
+        let i = 0;
+        const type = () => {
+            if (i < text.length) {
+                typewriter.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, 100);
+            }
+        };
+        setTimeout(type, 1000);
+    }
+
+    // 6. Scroll Reveal & Skill Bar Animation
     const reveals = document.querySelectorAll('.reveal');
+    const skillBars = document.querySelectorAll('.skill-progress');
+
+    // Pre-store widths and reset bars to 0
+    skillBars.forEach(bar => {
+        const width = bar.style.width;
+        bar.setAttribute('data-width', width);
+        bar.style.width = '0';
+    });
 
     const revealOnScroll = () => {
         const windowHeight = window.innerHeight;
@@ -99,62 +123,69 @@ document.addEventListener('DOMContentLoaded', () => {
         reveals.forEach((reveal) => {
             const elementTop = reveal.getBoundingClientRect().top;
             if (elementTop < windowHeight - elementVisible) {
-                reveal.classList.add('active');
+                if (!reveal.classList.contains('active')) {
+                    reveal.classList.add('active');
+                    
+                    // If this is the skills section, animate bars
+                    if (reveal.id === 'skills') {
+                        skillBars.forEach(bar => {
+                            const targetWidth = bar.getAttribute('data-width');
+                            setTimeout(() => {
+                                bar.style.width = targetWidth;
+                            }, 200);
+                        });
+                    }
+                }
             }
         });
     };
 
     window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll(); // Trigger once on load
-
-    // 6. Contact Form Submission handling (Netlify AJAX)
+    revealOnScroll();
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent default page redirect to handle via AJAX
-            
+            e.preventDefault();
+
             const btn = contactForm.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
-            
-            // Loading State
+
             btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin" style="margin-left: 8px;"></i>';
             btn.disabled = true;
             btn.style.opacity = '0.7';
 
-            // Submit via Fetch API
             const formData = new FormData(contactForm);
-            
+
             fetch('/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams(formData).toString()
             })
-            .then(() => {
-                // Success State
-                btn.innerHTML = 'Message Sent ✓';
-                btn.style.background = '#10b981'; // Green
-                btn.style.opacity = '1';
-                contactForm.reset();
+                .then(() => {
+                    btn.innerHTML = 'Message Sent ✓';
+                    btn.style.background = '#10b981'; // Green
+                    btn.style.opacity = '1';
+                    contactForm.reset();
 
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.background = ''; // Reset to default
-                    btn.disabled = false;
-                }, 3000);
-            })
-            .catch((error) => {
-                // Error State
-                btn.innerHTML = 'Error! Try Again';
-                btn.style.background = '#ef4444'; // Red
-                btn.style.opacity = '1';
-                console.error(error);
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.background = '';
-                    btn.disabled = false;
-                }, 3000);
-            });
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = ''; // Reset to default
+                        btn.disabled = false;
+                    }, 3000);
+                })
+                .catch((error) => {
+                    // Error State
+                    btn.innerHTML = 'Error! Try Again';
+                    btn.style.background = '#ef4444'; // Red
+                    btn.style.opacity = '1';
+                    console.error(error);
+
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = '';
+                        btn.disabled = false;
+                    }, 3000);
+                });
         });
     }
 
