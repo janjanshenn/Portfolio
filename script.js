@@ -265,3 +265,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// =========================================
+// Certificate Lightbox Modal
+// =========================================
+function openCertModal(card) {
+    const imgSrc = card.getAttribute('data-cert');
+    const lightbox = document.getElementById('cert-lightbox');
+    const lightboxImg = document.getElementById('cert-lightbox-img');
+    lightboxImg.src = imgSrc;
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeCertModal(e) {
+    const lightbox = document.getElementById('cert-lightbox');
+    // Close if clicking the backdrop or the close button (not the image itself)
+    if (e.target === lightbox || e.target.classList.contains('cert-lightbox-close')) {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Close lightbox with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const lightbox = document.getElementById('cert-lightbox');
+        if (lightbox && lightbox.classList.contains('active')) {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+});

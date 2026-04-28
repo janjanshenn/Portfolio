@@ -27,6 +27,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#certificates">Certificates</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="nav-controls">
@@ -255,6 +256,44 @@
             </div>
         </div>
     </section>
+
+    <section id="certificates" class="section certificates reveal">
+        <div class="container">
+            <h2 class="section-title">Certificates</h2>
+            <div class="certificates-grid">
+                <article class="certificate-card" data-cert="cert2.png" onclick="openCertModal(this)">
+                    <i class="fas fa-award cert-icon"></i>
+                    <h3>Introduction to Networks</h3>
+                </article>
+                <article class="certificate-card" data-cert="cert3.png" onclick="openCertModal(this)">
+                    <i class="fas fa-award cert-icon"></i>
+                    <h3>Programming Essentials in C++</h3>
+                </article>
+                <article class="certificate-card" data-cert="cert4.png" onclick="openCertModal(this)">
+                    <i class="fas fa-award cert-icon"></i>
+                    <h3>Advanced Programming in C++</h3>
+                </article>
+                <article class="certificate-card" data-cert="cert5.png" onclick="openCertModal(this)">
+                    <i class="fas fa-award cert-icon"></i>
+                    <h3>Ai Ethics and Governance</h3>
+                </article>
+                <article class="certificate-card" data-cert="cert6.png" onclick="openCertModal(this)">
+                    <i class="fas fa-award cert-icon"></i>
+                    <h3>Artificial Intelligence <br> Machine Learning</h3>
+                </article>
+                <article class="certificate-card" data-cert="cert7.png" onclick="openCertModal(this)">
+                    <i class="fas fa-award cert-icon"></i>
+                    <h3>5G Mobile Network</h3>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificate Lightbox Modal -->
+    <div id="cert-lightbox" class="cert-lightbox" onclick="closeCertModal(event)">
+        <button class="cert-lightbox-close" onclick="closeCertModal(event)" aria-label="Close">&times;</button>
+        <img id="cert-lightbox-img" class="cert-lightbox-img" src="" alt="Certificate">
+    </div>
 
     <section id="education" class="section education reveal">
         <div class="container">
