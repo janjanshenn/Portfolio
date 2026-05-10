@@ -284,6 +284,12 @@ function closeCertModal(e) {
     if (e.target === lightbox || e.target.classList.contains('cert-lightbox-close')) {
         lightbox.classList.remove('active');
         document.body.style.overflow = '';
+        setTimeout(() => {
+            const lightboxImg = document.getElementById('cert-lightbox-img');
+            if (lightboxImg && !lightbox.classList.contains('active')) {
+                lightboxImg.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; // Transparent pixel
+            }
+        }, 350);
     }
 }
 
@@ -294,6 +300,12 @@ document.addEventListener('keydown', (e) => {
         if (lightbox && lightbox.classList.contains('active')) {
             lightbox.classList.remove('active');
             document.body.style.overflow = '';
+            setTimeout(() => {
+                const lightboxImg = document.getElementById('cert-lightbox-img');
+                if (lightboxImg && !lightbox.classList.contains('active')) {
+                    lightboxImg.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; // Transparent pixel
+                }
+            }, 350);
         }
     }
 });
